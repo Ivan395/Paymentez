@@ -1,0 +1,26 @@
+version: '3.9'
+
+services:
+  payment_postgres_database:
+    container_name: payment_database
+    image: postgres:latest
+    restart: always
+    env_file:
+      - ./.env_database
+    ports:
+      - "5454:5432"
+
+  payment_backend:
+    container_name: payment_backend
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - ./.env
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    depends_on:
+      - payment_postgres_database
