@@ -35,7 +35,7 @@ class AddCardView(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
-        token: str = TokenPaymentez.get_token_authentication_paymentez()
+        token: str = TokenPaymentez().get_token_authentication_paymentez()
         response: ResponseAddCard = ResponseAddCard()
         try:
             card_data_request: RequestAddCard = RequestAddCard(data=request.data)
@@ -61,7 +61,7 @@ class GetAllCardsView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
-        token: str = TokenPaymentez.get_token_authentication_paymentez()
+        token: str = TokenPaymentez().get_token_authentication_paymentez()
         response: ResponseGetAllCards = ResponseGetAllCards()
         try:
             all_cards_request: RequestGetAllCards = RequestGetAllCards(data=request.data)
@@ -85,7 +85,7 @@ class DeleteCardView(APIView):
     permission_classes = [IsAuthenticated]
 
     def delete(self, request):
-        token: str = TokenPaymentez.get_token_authentication_paymentez()
+        token: str = TokenPaymentez().get_token_authentication_paymentez()
         response: ResponseDeleteCard = ResponseDeleteCard()
         try:
             delete_card_request: RequestDeleteCard = RequestDeleteCard(data=request.data)
@@ -109,7 +109,7 @@ class RefundCard(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
-        token: str = TokenPaymentez.get_token_authentication_paymentez()
+        token: str = TokenPaymentez().get_token_authentication_paymentez()
         response: ResponseRefund = ResponseRefund()
         try:
             refund_card_request: RequestRefund = RequestRefund(data=request.data)
