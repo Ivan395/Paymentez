@@ -18,15 +18,14 @@ from card.exceptions import SerializerValidationError
 class TokenPaymentez:
     _UNIXTIMESTAMP = 0
 
-    @classmethod
-    def get_token_authentication_paymentez(cls):
+    def get_token_authentication_paymentez(self):
         server_application_code: str = os.environ.get('APPLICATION_CODE')
         server_app_key: str = os.environ.get('UNIQ_TOKEN')
         unix_timestamp: str = str(int(time.time()))
-        if cls._UNIXTIMESTAMP - int(unix_timestamp) > 15:
-            cls._UNIXTIMESTAMP = int(unix_timestamp)
+        if self._UNIXTIMESTAMP - int(unix_timestamp) > 15:
+            self._UNIXTIMESTAMP = int(unix_timestamp)
         else:
-            unix_timestamp = str(cls._UNIXTIMESTAMP)
+            unix_timestamp = str(self._UNIXTIMESTAMP)
         uniq_token_string: str = server_app_key + unix_timestamp
         uniq_token_hash: str = hashlib.sha256(uniq_token_string.encode('utf-8')).hexdigest()
         auth_token = b64encode(f'{server_application_code};{unix_timestamp};{uniq_token_hash}'.encode())
@@ -35,7 +34,7 @@ class TokenPaymentez:
 
 class CreateUserView(APIView):
     serializer_class = RequestUser
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
 
     def post(self, request):
         response: ResponseUser = ResponseUser()
